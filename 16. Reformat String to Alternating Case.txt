@@ -1,0 +1,46 @@
+
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        string input = "Za^B8g@E2j*kw!MoPqXr7YvT1c$Fs3Ud9IwZyX0pLkV6sHqN^tB4rA+oZ%gFj";
+        string output = ReformString(input);
+        Console.WriteLine(output);
+    }
+
+    static string ReformString(string s)
+    {
+        char[] result = new char[s.Length];
+        bool upper = true; // Start with upper case
+        int alphaIndex = 0; // To track alphabetical characters
+
+        for (int i = 0; i < s.Length; i++)
+        {
+            char currentChar = s[i];
+
+            if (char.IsLetter(currentChar)) // Check if the character is an alphabet
+            {
+                // Determine if we should use uppercase or lowercase based on the index
+                if (upper)
+                {
+                    result[i] = char.ToUpper(currentChar);
+                }
+                else
+                {
+                    result[i] = char.ToLower(currentChar);
+                }
+
+                // Alternate the case for the next alphabetical character
+                upper = !upper;
+            }
+            else
+            {
+                // Keep the original character (special character, number, space)
+                result[i] = currentChar;
+            }
+        }
+
+        return new string(result);
+    }
+}

@@ -1,0 +1,72 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+class Program
+{
+    static void Main()
+    {
+        // Example input
+        int[] shelf = { 1234567, 1234567, 2345678, 2345678, 3456789, 3456789, 3456789, 1234567, 2345678, 3456789, 4567890, 
+                        4567890, 5678901, 6789012, 6789012, 1234567, 2345678, 3456789, 4567890, 5678901, 5678901 };
+        
+        // Calling the function and printing the output
+        string result = CanOrganizeBooks(shelf);
+        Console.WriteLine(result); // Output: YES or NO
+    }
+
+    static string CanOrganizeBooks(int[] shelf)
+    {
+        // Step 1: Count the occurrences of each unique number
+        var countMap = new Dictionary<int, int>();
+
+        foreach (var book in shelf)
+        {
+            if (countMap.ContainsKey(book))
+            {
+                countMap[book]++;
+            }
+            else
+            {
+                countMap[book] = 1;
+            }
+        }
+
+        // Step 2: Check if all counts can be organized into identical sets
+        HashSet<int> setSizes = new HashSet<int>();
+
+        foreach (var count in countMap.Values)
+        {
+            if (count < 2) // Each set must have more than 1 copy
+                return "NO";
+
+            setSizes.Add(count);
+        }
+
+        // All counts should be identical or have compatible formations
+        // Check if there's only one unique size 
+        if (setSizes.Count == 1)
+            return "YES";
+        
+        // Step 3: Check if all counts can form valid sets (all same or consistent multiples)
+        int gcd = setSizes.First();
+        foreach (int size in setSizes)
+        {
+            gcd = GCD(gcd, size);
+        }
+
+        return gcd > 1 ? "YES" : "NO";
+    }
+
+    // Function to compute the greatest common divisor (GCD)
+    static int GCD(int a, int b)
+    {
+        while (b != 0)
+        {
+            int temp = b;
+            b = a % b;
+            a = temp;
+        }
+        return a;
+    }
+}

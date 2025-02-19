@@ -1,0 +1,15 @@
+class MagicPotionIdentifier
+{
+    static string IsMagicPotion(long power)
+    {
+        long cubeRoot = (long)Math.Round(Math.Pow(power, 1.0 / 3.0));
+        return (cubeRoot * cubeRoot * cubeRoot == power) ? "YES" : "NO";
+    }
+
+    static void Main()
+    {
+        Console.Write("Enter power level: ");
+        long power = long.Parse(Console.ReadLine());
+        Console.WriteLine(IsMagicPotion(power));
+    }
+}

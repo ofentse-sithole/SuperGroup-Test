@@ -1,0 +1,41 @@
+class Program
+{
+    static void Main(string[] args)
+    {
+        // Example input
+        int[] outcomes = { 123456, 234567, 123347, 456789, 567890, 678901, 789012, 890123, 901234, 112233, 223344, 334455, 789012, 222234, 123347 };
+
+        // Get duplicates
+        int[] duplicates = FindDuplicates(outcomes);
+
+        // Print the result
+        Console.WriteLine($"[{duplicates[0]}, {duplicates[1]}]");
+    }
+
+    static int[] FindDuplicates(int[] outcomes)
+    {
+        HashSet<int> seen = new HashSet<int>();
+        List<int> duplicates = new List<int>();
+
+        foreach (int outcome in outcomes)
+        {
+            // If the outcome has been seen before, it is a duplicate
+            if (seen.Contains(outcome))
+            {
+                duplicates.Add(outcome);
+            }
+            else
+            {
+                seen.Add(outcome);
+            }
+
+            // We only need two duplicates
+            if (duplicates.Count == 2)
+            {
+                break;
+            }
+        }
+
+        return duplicates.ToArray();
+    }
+}
